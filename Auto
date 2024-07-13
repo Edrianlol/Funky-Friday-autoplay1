@@ -1,0 +1,60 @@
+-- Create the Screen GUI
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "FunkyFridayGUI"
+screenGui.ResetOnSpawn = false
+screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+-- Create a frame for the GUI
+local frame = Instance.new("Frame")
+frame.Size = UDim2.new(0, 200, 0, 100)
+frame.Position = UDim2.new(0.5, -100, 0.5, -50)
+frame.BackgroundColor3 = Color3.fromRGB(0, 0, 255)
+frame.Active = true
+frame.Draggable = true
+frame.Parent = screenGui
+
+-- Create a title label
+local titleLabel = Instance.new("TextLabel")
+titleLabel.Size = UDim2.new(1, 0, 0, 25)
+titleLabel.Position = UDim2.new(0, 0, 0, 0)
+titleLabel.BackgroundColor3 = Color3.fromRGB(0, 0, 200)
+titleLabel.Text = "Funky Friday Script"
+titleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+titleLabel.Parent = frame
+
+-- Create the Autoplay toggle button
+local toggleButton = Instance.new("TextButton")
+toggleButton.Size = UDim2.new(0, 180, 0, 50)
+toggleButton.Position = UDim2.new(0.5, -90, 0.5, -25)
+toggleButton.BackgroundColor3 = Color3.fromRGB(0, 100, 200)
+toggleButton.Text = "Toggle Autoplay: OFF"
+toggleButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+toggleButton.Parent = frame
+
+-- Autoplay functionality
+local autoplayEnabled = false
+
+local function toggleAutoplay()
+    autoplayEnabled = not autoplayEnabled
+    toggleButton.Text = "Toggle Autoplay: " .. (autoplayEnabled and "ON" or "OFF")
+    
+    if autoplayEnabled then
+        game.StarterGui:SetCore("SendNotification", {
+            Title = "Autoplay",
+            Text = "Autoplay Enabled",
+            Duration = 2
+        })
+        -- Autoplay logic goes here
+        -- Example: game:GetService("ReplicatedStorage").AutoplayEvent:FireServer(true)
+    else
+        game.StarterGui:SetCore("SendNotification", {
+            Title = "Autoplay",
+            Text = "Autoplay Disabled",
+            Duration = 2
+        })
+        -- Disable autoplay logic
+        -- Example: game:GetService("ReplicatedStorage").AutoplayEvent:FireServer(false)
+    end
+end
+
+toggleButton.MouseButton1Click:Connect(toggleAutoplay)
